@@ -1,0 +1,14 @@
+name: Hello World Workflow
+on: [push]
+
+jobs:
+    run-shell:
+        runs-on: ubuntu-latest
+        steps:
+            - name: echo a string
+              run: echo "Hello World"
+            - name: Multiline Command
+              run: |
+                echo "Checking environment versions"
+                node -v
+                npm -v
