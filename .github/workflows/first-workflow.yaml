@@ -10,5 +10,6 @@ jobs:
             - name: Multiline Command
               run: |
                 echo "Checking environment versions"
-                node -v
-                npm -v
+                echo "Node Version: $(node --version)"
+                echo "NPM Version: $(npm --version)"
+                echo "NuGet Version: $(nuget help | grep Version)"
