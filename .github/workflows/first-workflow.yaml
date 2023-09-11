@@ -13,3 +13,16 @@ jobs:
                 echo "Node Version: $(node --version)"
                 echo "NPM Version: $(npm --version)"
                 echo "NuGet Version: $(nuget help | grep Version)"
+    
+    macos-parallel-job:
+        runs-on: macos-latest
+        steps:
+            - name: View SW Version
+              run: sw_vers
+
+    windows-dependent-job:
+        runs-on: windows-latest
+        needs: run-shell
+        steps:
+            - name: echo a string
+              run: Write-Output "Windows String"
