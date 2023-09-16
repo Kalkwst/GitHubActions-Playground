@@ -1,16 +1,15 @@
 name: Thank contributors
 
 on:
-  pull_request:
-    types: [closed]
+  pull_request_target:
+    types:
+      - closed
 
 jobs:
   thank:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
-      - name: Check if the pull request was merged
-        if: github.event.pull_request.merged == true
-        run: echo "The pull request was merged."
       - name: Comment on the pull request
         uses: peter-evans/create-or-update-comment@v1
         with:
