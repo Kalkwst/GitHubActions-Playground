@@ -1,0 +1,21 @@
+name: Display Runner Characteristics
+on:
+    workflow_dispatch
+
+jobs:
+    display-runner-characteristics:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Display system characteristics
+              run: |
+                echo "Operating System: $(uname)"
+                echo "Kernel Version: $(uname -r)"
+                echo "Architecture: $(uname -m)"
+                echo "Shell: $SHELL"
+                echo "CPU Information: "
+                lscpu
+                echo "Memory Information: "
+                free -h
+                echo "Disk Information: "
+                df -h
