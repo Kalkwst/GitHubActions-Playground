@@ -1,0 +1,72 @@
+name: System Info Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      username:
+        description: 'Enter your name'
+        required: true
+      repository:
+        description: 'Enter the repository name'
+        required: true
+      verbose:
+        description: 'Verbose output'
+        required: false
+        default: 'false'
+      use_emoji:
+        description: 'Use emojis in output'
+        required: false
+        default: 'false'
+      info_choice:
+        description: 'Choose the information to display'
+        required: true
+        default: 'cpu info'
+        type: choice
+        options:
+          - cpu info
+          - memory info
+          - disk info
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display user and repository
+        run: |
+          echo "User: ${{ github.event.inputs.username }}"
+          echo "Repository: ${{ github.event.inputs.repository }}"
+          
+      - name: Display system information
+        run: |
+          if [ "${{ github.event.inputs.verbose }}" = "true" ]; then
+            if [ "${{ github.event.inputs.use_emoji }}" = "true" ]; then
+                echo "🖥️  Operating System"
+            fi
+            echo "Operating System: $(uname -o)"
+            echo "Kernel Version: $(uname -r)"
+            echo "Architecture: $(uname -m)"
+            echo "Shell Info: $SHELL"
+          fi
+
+      - name: Display CPU, Memory or Disk info
+        run: |
+          case "${{ github.event.inputs.info_choice }}" in
+            "cpu info")
+              if [ "${{ github.event.inputs.use_emoji }}" = "true" ]; then
+                echo "🔧  CPU Info"
+              fi
+              lscpu
+              ;;
+            "memory info")
+              if [ "${{ github.event.inputs.use_emoji }}" = "true" ]; then
+                echo "🧠  Memory Info"
+              fi
+              free -h
+              ;;
+            "disk info")
+              if [ "${{ github.event.inputs.use_emoji }}" = "true" ]; then
+                echo "🖴  Disk Info"
+              fi
+              df -h
+              ;;
+          esac
